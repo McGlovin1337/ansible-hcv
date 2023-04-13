@@ -1,0 +1,11 @@
+# ansible-hcv-config.toml
+
+[vault]
+uri = "https://127.0.0.1:8200"
+verify_tls = true
+timeout = 30
+token_path = "~/.ansible-hcv/.hcvtoken"
+namespace = ""
+kv_mount = "ansible-kv"
+kv_version = 2
+key_name = "password"

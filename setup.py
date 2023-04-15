@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name="ansible-hcv-client",
-    version="0.1.0",
+    version="0.2.0",
     author="James Riach",
     author_email="james@jriach.co.uk",
     description=("ansible-vault client script to access ansible-vault keys stored in Hashicorp Vault"),
@@ -24,7 +24,7 @@ setup(
     package_data={'ansiblehcv': ['data/default-config.toml']},
     long_description=read('README'),
     classifiers=[
-        "Development Status :: 1 - Planning",
+        "Development Status :: 3 - Alpha",
         "Topic :: Utilities",
     ],
     test_suite='tests',

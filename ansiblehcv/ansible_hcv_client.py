@@ -74,6 +74,20 @@ def _set_hcv_token(token: str) -> None:
         token_file.write(encrypted_token.secure_string)
 
 
+def _read_token(token_path: str) -> FernetString:
+    """Reads the stored encrypted Hashicorp Vault token
+
+    Args:
+        token_path (str): The path to the file containing the encrypted token
+
+    Returns:
+        FernetString: A FernetString object containing the encrypted token
+    """
+    # Read the encrypted token used to access Hashicorp Vault
+    with open(os.path.expanduser(token_path), 'rb') as token_file:
+        return FernetString.from_secure_string(token_file.readline())
+
+
 def _fetch_ansible_key(vault_id: str) -> str:
     """Return the ansible key specified by ansible-vault-id
 
@@ -83,14 +97,8 @@ def _fetch_ansible_key(vault_id: str) -> str:
     Returns:
         str: The requested key
     """
-    # Read the configuration file
     vault_config = _read_config_file()
-
-    encrypted_token = None
-
-    # Read the encrypted token used to access Hashicorp Vault
-    with open(os.path.expanduser(vault_config['vault']['token_path']), 'rb') as token_file:
-        encrypted_token = FernetString.from_secure_string(token_file.readline())
+    encrypted_token = _read_token(vault_config['vault']['token_path'])
 
     if encrypted_token is None:
         return None
@@ -106,6 +114,13 @@ def _fetch_ansible_key(vault_id: str) -> str:
         namespace=vault_config['vault']['namespace'],
         timeout=vault_config['vault']['timeout']
     )
+
+    # Renew the token
+    if vault_config['vault']['renew_token']:
+        try:
+            hcv_client.auth.token.renew_self()
+        except:
+            pass
 
     # Version 1 KV Secrets Engine
     if vault_config['vault']['kv_version'] == 1:

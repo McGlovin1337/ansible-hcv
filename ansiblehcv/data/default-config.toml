@@ -5,6 +5,7 @@ uri = "https://127.0.0.1:8200"
 verify_tls = true
 timeout = 30
 token_path = "~/.ansible-hcv/.hcvtoken"
+renew_token = true
 namespace = ""
 kv_mount = "ansible-kv"
 kv_version = 2

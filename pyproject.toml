@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ansible-hcv-client"
+version = "0.2.0"
+authors = [{name = "James Riach"}]
+description = "ansible-vault client script to access ansible-vault keys stored in Hashicorp Vault"
+readme = "README.md"
+dependencies = [
+    "fernetstring",
+    "hvac",
+    "tomli"
+]
+requires-python = ">= 3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Topic :: Utilities",
+]
+
+[project.scripts]
+ansible-hcv-client = "ansiblehcv.ansible_hcv_client:main"
+
+[project.urls]
+Repository = "https://github.com/McGlovin1337/ansible-hcv"
+Issues = "https://github.com/McGlovin1337/ansible-hcv/issues"
+
+[tool.setuptools.package-data]
+ansiblehcv = ["data/default-config.toml"]

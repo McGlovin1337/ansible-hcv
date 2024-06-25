@@ -9,7 +9,8 @@ import urllib3
 from fernetstring.fernetstr import FernetString
 
 
-ANSIBLE_HCV_CONFIG_PATH = Path(Path.joinpath(Path.home(), '.ansible-hcv'))
+ANSIBLE_HCV_CONFIG_PATH = Path(Path.joinpath(Path.home(), '.ansible-hcv')) if 'AHCV_CONFIG_PATH' \
+    not in os.environ else Path(os.environ['AHCV_CONFIG_PATH'])
 ANSIBLE_HCV_CONFIG_FILE = 'ansible-hcv-config.toml'
 ANSIBLE_HCV_CONFIG = Path.joinpath(ANSIBLE_HCV_CONFIG_PATH, ANSIBLE_HCV_CONFIG_FILE)
 

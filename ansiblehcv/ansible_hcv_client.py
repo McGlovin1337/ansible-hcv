@@ -2,7 +2,7 @@
 import argparse
 import os
 from pathlib import Path
-import pkg_resources
+import importlib.resources as importlib_resources
 import hvac
 import tomli
 import urllib3
@@ -17,7 +17,8 @@ ANSIBLE_HCV_CONFIG = Path.joinpath(ANSIBLE_HCV_CONFIG_PATH, ANSIBLE_HCV_CONFIG_F
 
 def _install_config() -> None:
     """Install a default configuration file"""
-    source_cfg = pkg_resources.resource_stream(__name__, 'data/default-config.toml')
+    # source_cfg = pkg_resources.resource_stream(__name__, 'data/default-config.toml')
+    source_cfg = importlib_resources.files(__name__).joinpath('data/default-config.toml')
 
     if not Path.exists(ANSIBLE_HCV_CONFIG_PATH):
         Path.mkdir(
